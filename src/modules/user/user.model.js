@@ -12,11 +12,11 @@ const User = sequelize.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
-    name: {
+    username: {
       allowNull: false,
       type: DataTypes.STRING(100),
     },
-    username: {
+    email: {
       unique: true,
       allowNull: false,
       type: DataTypes.STRING(100),
@@ -24,7 +24,7 @@ const User = sequelize.define(
         isEmail: true,
       },
       set(value) {
-        this.setDataValue('username', value.toLowerCase());
+        this.setDataValue('email', value.toLowerCase());
       },
     },
     password: {
@@ -34,12 +34,21 @@ const User = sequelize.define(
         this.setDataValue('password', bcrypt.hashSync(value, 8));
       },
     },
+    confirmPassword: {
+      type: DataTypes.VIRTUAL,
+      allowNull: false,
+      validate: {
+        isConfirmed(value) {
+          if (value !== this.password) {
+            throw new Error('Password confirmation does not match!');
+          }
+        },
+      },
+    },
   },
   {
     tableName: 'users',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
   }
 );
 
