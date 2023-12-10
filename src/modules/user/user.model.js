@@ -30,9 +30,6 @@ const User = sequelize.define(
     password: {
       allowNull: false,
       type: DataTypes.STRING,
-      set(value) {
-        this.setDataValue('password', bcrypt.hashSync(value, 8));
-      },
     },
     confirmPassword: {
       type: DataTypes.VIRTUAL,
@@ -49,6 +46,14 @@ const User = sequelize.define(
   {
     tableName: 'users',
     timestamps: true,
+    hooks: {
+      beforeCreate: async (user, uptions) => {
+        if (user.password) {
+          user.password = bcrypt.hashSync(user.password, 8);
+        }
+        user.confirmPassword = undefined;
+      },
+    },
   }
 );
 

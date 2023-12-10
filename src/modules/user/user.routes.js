@@ -9,6 +9,6 @@ const { registerSchema, loginSchema } = require('./user.schema');
 
 module.exports = app => {
   app.post('/api/users/signup', validate(registerSchema), controller.signup);
-  app.post('/api/users/login', validate(loginSchema), controller.login);
+  app.post('/api/users/login', controller.login);
   // app.get('/api/users/:id', AuthStrategy, controller.getSignedInUserProfile);
 };
