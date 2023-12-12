@@ -24,7 +24,7 @@ const login = asyncHandler(async (req, res, next) => {
   const { identifier, password } = req.body;
 
   if (!identifier || !password) {
-    return next(new AppError('Please provide both values!'));
+    return next(new AppError('Please provide your credentials!'));
   }
 
   const user = await User.findOne({
@@ -45,7 +45,11 @@ const login = asyncHandler(async (req, res, next) => {
 
   const { password: Password, createdAt, updatedAt, ...userRestInfo } = user.dataValues;
 
-  res.status(200).json({ user: userRestInfo });
+  res.status(200).json({
+    status: 'success',
+    message: 'User logged in successfully!',
+    user: userRestInfo,
+  });
 });
 
 module.exports = {

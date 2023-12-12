@@ -12,9 +12,7 @@ const init = async () => {
 
   function userSeeder(callback) {
     User.findOrCreate({
-      where: {
-        [Op.or]: [{ username: 'mahdi' }, { email: 'admin@gmail.com' }],
-      },
+      where: { email: 'admin@gmail.com' },
       defaults: {
         username: 'mahdi',
         email: 'admin@gmail.com',

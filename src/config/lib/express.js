@@ -1,4 +1,5 @@
 const path = require('path');
+const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const express = require('express');
@@ -8,6 +9,7 @@ const nodeCache = require(path.join(process.cwd(), 'src/config/lib/nodecache'));
 
 module.exports = () => {
   const app = express();
+  app.use(cors());
   app.use(morgan('dev'));
   app.use(cookieParser(nodeCache.getValue('COOKIE_SECRET')));
   app.use(express.json());

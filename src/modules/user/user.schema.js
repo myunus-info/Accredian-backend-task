@@ -26,20 +26,4 @@ const registerSchema = object().shape({
     .required('This field must not be empty'),
 });
 
-const loginSchema = object().shape({
-  username: string()
-    .max(100, 'This field must be at most 100 characters long')
-    .test('No special character, space or uppercase in username', username => isUsernameValid(username)),
-  email: string()
-    .max(100, 'This field must be at most 100 characters long')
-    .test('Invalid email address', email => isEmailValid(email)),
-  password: string()
-    .min(8, 'Password must be at least 8 characters long')
-    .max(50, 'This field must be at most 50 characters long')
-    .required('Password must not be empty'),
-});
-
-module.exports = {
-  registerSchema,
-  loginSchema,
-};
+module.exports = registerSchema;

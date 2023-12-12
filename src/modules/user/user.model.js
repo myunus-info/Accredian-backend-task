@@ -50,8 +50,8 @@ const User = sequelize.define(
       beforeCreate: async (user, uptions) => {
         if (user.password) {
           user.password = bcrypt.hashSync(user.password, 8);
+          user.confirmPassword = undefined;
         }
-        user.confirmPassword = undefined;
       },
     },
   }
